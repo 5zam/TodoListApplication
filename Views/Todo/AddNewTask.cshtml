@@ -1,0 +1,31 @@
+﻿@model ToDoListApplication.Models.Todo
+
+<h2>Add New Task</h2>
+
+<form asp-action="AddNewTask" method="post">
+    <input type="hidden" asp-for="CategoryId" />
+
+    <div>
+        <label>Task Name</label>
+        <input asp-for="TaskName" class="form-control" />
+    </div>
+
+    <div>
+        <label>Description</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+
+    <div>
+        <label>Deadline</label>
+        <input asp-for="Deadline" type="date" class="form-control" />
+    </div>
+
+    <div>
+        <label>Priority</label>
+        <select asp-for="Priority" class="form-control"
+                asp-items="Html.GetEnumSelectList<ToDoListApplication.Models.Enum.PriorityStatus>()">
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-2">Add Task</button>
+</form>

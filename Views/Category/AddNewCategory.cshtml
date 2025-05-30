@@ -1,0 +1,12 @@
+﻿@model ToDoListApplication.Models.Category
+
+<h2>Add New Category</h2>
+
+<form asp-action="AddNewCategory" method="post">
+    <div class="form-group">
+        <label>Category Name</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Add</button>
+</form>

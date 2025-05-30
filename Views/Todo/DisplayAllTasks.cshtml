@@ -1,0 +1,46 @@
+﻿@model ToDoListApplication.Models.Category
+
+<h2>Tasks for: @Model.Name</h2>
+
+<a href="@Url.Action("AddNewTask", "Todo", new { categoryId = Model.Id })" class="btn btn-primary mb-3">+ Add Task</a>
+
+@if (Model.TodoList.Any())
+{
+    <ul class="list-group">
+        @foreach (var task in Model.TodoList)
+        {
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>@task.TaskName</strong> <br />
+                    @task.Description <br />
+                    <small>Deadline: @task.Deadline.ToShortDateString()</small> <br />
+                    <small>Priority: @task.Priority</small>
+                </div>
+
+                <div>
+                    <a href="@Url.Action("EditTask", "Todo", new { id = task.Id })" class="btn btn-sm btn-warning">Edit</a>
+
+
+                    <div class="@(task.IsFinished ? "done-task" : "")">
+                        <strong>@task.TaskName</strong> <br />
+                        @task.Description <br />
+                        <small>Deadline: @task.Deadline.ToShortDateString()</small> <br />
+                        <small>Priority: @task.Priority</small>
+                    </div>
+
+                    <form asp-action="DeleteTask" asp-controller="Todo" method="post" class="d-inline">
+                        <input type="hidden" name="id" value="@task.Id" />
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this task?')">
+                            Delete
+                        </button>
+                    </form>
+
+                </div>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No tasks added yet.</p>
+}
