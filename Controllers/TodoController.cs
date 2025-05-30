@@ -85,7 +85,7 @@ namespace ToDoListApplication.Controllers
         [HttpPost]
         public IActionResult MarkAsDone(int id)
         {
-            var task = _context.Todos.Find(id);
+            var task = _context.Todos.FirstOrDefault(t => t.Id == id);
             if (task == null)
                 return NotFound();
 
@@ -94,6 +94,21 @@ namespace ToDoListApplication.Controllers
 
             return RedirectToAction("DisplayAllTasks", new { categoryId = task.CategoryId });
         }
+
+        //Undo
+        [HttpPost]
+        public IActionResult MarkAsUnDone(int id)
+        {
+            var task = _context.Todos.FirstOrDefault(t => t.Id == id);
+            if (task == null)
+                return NotFound();
+
+            task.IsFinished = false;
+            _context.SaveChanges();
+
+            return RedirectToAction("DisplayAllTasks", new { categoryId = task.CategoryId });
+        }
+
 
         //delete
         [HttpPost]
